@@ -1,27 +1,26 @@
-# ThemeTest
+## 换肤实现使用:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.3.
+### 1.在theme中添加可变样式值
 
-## Development server
+可变样式添加到**theme.scss**中最下方的**$themes**中,其格式与json相同,只是把{}换成了()
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### 2.在base.scss中增加样式
 
-## Code scaffolding
+定义在mixin.scss中的handleTheme通过循环,把所有$theme里最外层的(主题名:主题样式)提取出来,通过theme-主题名的拼接,形成独立的主题.并且在主题内给出了所有定义的主题样式类,只需要通过themed('key')的方式即可拿到想要的属性。
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+这样就存在两种写法:
 
-## Build
+* 把所有样式全部写在base.scss中,只在各页面中引用
+* 可变样式写在base.scss中,各页面单读写不可变样式
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+考虑到项目的维护,前期更推荐使用第一种方案.后期代码重构时可以考虑把不可变模式提取到各界面中并以懒加载增加性能
 
-## Running unit tests
+具体可以看例子
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 3.使用
 
-## Running end-to-end tests
+我在service中封装了ThemeService,通过给body设置theme改变样式,各界面引用theme调用changeTheme并传入相应的key或者theme对应的index即可修改,也可以调用randomTheme随机一个和当前主题不一样的主题使用
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+***推荐先了解scss的基本用法再理解换肤功能***
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+熟练使用scss对提高开发效率以及后期代码维护、重构的意义不言而喻，希望大家可以抽空多多联系。

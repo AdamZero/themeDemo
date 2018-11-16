@@ -1,0 +1,14 @@
+@import '../../theme/base.scss';
+
+
+@include handleTheme($themes) {
+  color: themed('font-color');
+  background-color: themed('color');
+
+  .list {
+    list-style: none;
+
+    &:nth-child(n) {}
+  }
+
+}

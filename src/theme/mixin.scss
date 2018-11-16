@@ -1,0 +1,26 @@
+@import './theme.scss';
+
+// 处理所有主题
+@mixin handleTheme($themes:$themes) {
+
+  @each $theme-name,
+  $map in $themes {
+    .theme-#{$theme-name} {
+      //初始化theme-map对象
+      $theme-map: () !global;
+
+      @each $key,
+      $val in $map {
+        $theme-map: map-merge($theme-map, ($key:$val)) !global;
+      }
+
+      @content; // 把中间包裹的内容添加进来
+      $theme-map:null !global
+    }
+  }
+}
+
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
